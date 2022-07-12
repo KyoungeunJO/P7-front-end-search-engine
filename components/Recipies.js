@@ -1,3 +1,9 @@
+/**
+ * Create an instance of Recipes component
+ * @author Kyoungeun Jo
+ * @param {Array} data List of recipes in json
+ * @returns {string} Rendering of component in HTML
+ */
 export default function Recipies(data) {
     const { name, ingredients, time, description } = data;
 
