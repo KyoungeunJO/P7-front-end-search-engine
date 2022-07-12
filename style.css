@@ -1,0 +1,60 @@
+.test {
+    min-width: 200px;
+    min-height: 100px;
+    outline: 1px solid red;
+    position: relative;
+}
+.test::before {
+    content: "test";
+    color: red;
+    position: absolute;
+    inset: 20px auto 0 auto 20px;
+}
+
+#logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+    width: 268px;
+}
+
+form {
+    margin-bottom: 0.5rem;
+}
+
+#search-recipe {
+    width: min(400px,100%);
+    background-color: #E7E7E7;
+    padding: 0.6rem;
+    border: 0 #E7E7E7;
+}
+
+.filter-container {
+    display: flex;
+    gap: 1rem;
+}
+
+.filter {
+    width: min(33%,150px);
+    color: white;
+    padding: 1rem;
+}
+
+.ingredients {
+    background-color: #3282F7;   
+}
+
+.appareils {
+    background-color: #68D9A4;
+}
+
+.ustensiles {
+    background-color: #ED6454;
+}
+
+#recipes-container {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
+}
