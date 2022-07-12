@@ -1,9 +1,5 @@
 import Recipies from '../components/Recipies.js'
-
-async function getRecipes() {
-    return fetch("./data/recipes.json")
-        .then(data => data.json())
-}
+import getRecipes from '../utils/recipesAPI.js'
 
 async function displayData(recipes) {
     const recipesSection = document.querySelector("#recipes-container");
