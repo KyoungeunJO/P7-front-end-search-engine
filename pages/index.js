@@ -10,8 +10,8 @@ async function displayData(recipes) {
 
     recipes.forEach((recipe) => {
         const recipesModel = Recipies(recipe);
-        const userCardDOM = recipesModel.render();
-        recipesSection.appendChild(userCardDOM);
+        const recipeCardDOM = recipesModel.render();
+        recipesSection.innerHTML += recipeCardDOM;
     });
 };
 
