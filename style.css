@@ -63,3 +63,22 @@ form {
     text-decoration: none;
     color: black;
 }
+
+#recipe {
+    display: grid;
+}
+
+.recipe-img {
+    width: 100%;
+    aspect-ratio: 2/1;
+    background-color: #C7BEBE;
+    border-radius: 5px 5px 0 0;
+}
+
+.recipe-text {
+    background-color: #E7E7E7;
+    border-radius: 0 0 5px 5px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px,1fr));
+    text-overflow: ellipsis;
+}

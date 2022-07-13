@@ -20,13 +20,15 @@ export default function Recipies(data) {
         return `
         <a href="#" class="decoration-none">
             <article>
-                <span></span>
-                <div>
-                    <h2>${name}</h2>
-                    <p class="fas fa-clock" aria-hidden="true">${time}</p>
-                    <p>${stringifyIngredients(ingredients)}</p>
+                <div id="recipe">    
+                    <img class="recipe-img">
+                    <div class="recipe-text">
+                        <h2>${name}</h2>
+                        <p class="fas fa-clock" aria-hidden="true">${time} min</p>
+                        <p>${stringifyIngredients(ingredients)}</p>
 
-                    <p>${description}</p>
+                        <p>${description}</p>
+                    </div>
                 </div>
             </article>
         </a>
