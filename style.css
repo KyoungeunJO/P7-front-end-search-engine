@@ -33,12 +33,16 @@ form {
 .filter-container {
     display: flex;
     gap: 1rem;
+    margin-bottom: 2rem;
 }
 
 .filter {
     width: min(33%,150px);
     color: white;
     padding: 1rem;
+    height: min-content;
+    max-height: 200px;
+    overflow: scroll;
 }
 
 .ingredients {
@@ -76,9 +80,44 @@ form {
 }
 
 .recipe-text {
+    grid-template: "a a a a a a a b b b" 30px
+                   "c c c c c d d d d d" 140px
+                   / 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     background-color: #E7E7E7;
     border-radius: 0 0 5px 5px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px,1fr));
+    min-width: 0;
+    padding: 1.2em;
+}
+
+article h2 {
+    grid-area: a;
+    font-size: 1.1em;
+    margin: 0;
+}
+
+.time {
+    grid-area: b;
+    margin: 0;
+    text-align: end;
+}
+
+.list-ingredients {
+    grid-area: c;
+    overflow: hidden;
     text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.description {
+    grid-area: d;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }

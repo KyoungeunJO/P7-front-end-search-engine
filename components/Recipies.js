@@ -24,10 +24,10 @@ export default function Recipies(data) {
                     <img class="recipe-img">
                     <div class="recipe-text">
                         <h2>${name}</h2>
-                        <p class="fas fa-clock" aria-hidden="true">${time} min</p>
-                        <p>${stringifyIngredients(ingredients)}</p>
+                        <p class="fas fa-clock time">${time} min</p>
+                        <p class="list-ingredients">${stringifyIngredients(ingredients)}</p>
 
-                        <p>${description}</p>
+                        <p class="description">${description}</p>
                     </div>
                 </div>
             </article>
