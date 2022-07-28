@@ -1,5 +1,6 @@
 import Recipies from '../components/Recipies.js'
 import Filter from '../components/Filter.js'
+import Tag from '../components/Tag.js'
 import getRecipes from '../utils/recipesAPI.js'
 
 async function displayRecipes(recipes) {
@@ -36,17 +37,20 @@ function displayBtn(recipes) {
     const filters = [
         {
             title: "Ingredients",
-            elements: Array.from(ingredientsSet)
+            elements: Array.from(ingredientsSet),
+            type: "ingredients"
         },
 
         {
             title: "Appareils",
-            elements: Array.from(appareilsSet)
+            elements: Array.from(appareilsSet),
+            type: "appliances"
         },
 
         {
             title: "Ustensiles",
-            elements: Array.from(ustensilsSet)
+            elements: Array.from(ustensilsSet),
+            type: "ustensils"
         },
     ]
 
@@ -55,6 +59,21 @@ function displayBtn(recipes) {
         const filterCardDOM = filterModel.render();
         filterSection.innerHTML += filterCardDOM;
     })
+
+    const filterElements = document.querySelectorAll('.element-list li');
+    filterElements.forEach(element => element.addEventListener('click', (e) => {
+        // Add tag on page
+        const type = element.getAttribute('data-type')
+        const tagValue = e.target.innerText
+        let tag = Tag({text: tagValue, type: type})
+        const tagSection = document.querySelector(".tag-container")
+        tagSection.innerHTML += tag.render()
+        
+        // Filter recipes
+        userResearch[type].push(tagValue)
+        updateFromSearch(userResearch)
+    }) 
+    )
 };
 
 
@@ -95,19 +114,46 @@ function updateFromSearch(userResearch) {
 }
 
 function filterRecipes(userResearch) {
+    let filteredRecipes = []
+
     // return immediately if no keywords
     if (userResearch.keywords.length == 0) {
-        return recipes
+        filteredRecipes = [...recipes]
+    } else {
+        filteredRecipes = recipes.filter(recipe => {
+            // filter by keywords
+            const RecipeIngredients = recipe.ingredients.reduce((acc, val) =>  { 
+                acc.push(val.ingredient)
+                return acc
+            } , [])
+
+            return (
+            recipe.name.includes(userResearch.keywords[0]) || 
+            RecipeIngredients.includes(userResearch.keywords[0]) || 
+            recipe.description.includes(userResearch.keywords[0])   
+            )
+        })
     }
-    
-    // filter by keywords
-    let filteredRecipes = recipes.filter(recipe => {
-        return (
-        recipe.name.includes(userResearch.keywords[0]) || 
-        // recipes.ingredients.includes(userResearch.keywords) || 
-        recipe.description.includes(userResearch.keywords[0])
-        )
+
+    // filter by tag ingredients
+    filteredRecipes = filteredRecipes.filter(recipe => {
+        const RecipeIngredients = recipe.ingredients.reduce((acc, val) =>  { 
+            acc.push(val.ingredient)
+            return acc
+        } , [])
+
+        let shouldKeep = userResearch.ingredients.some(ingredient => RecipeIngredients.includes(ingredient))
+        return (shouldKeep)
     })
+
+
     return filteredRecipes
 }
 
+window.addEventListener('click', (e) => {
+    const filtersCls = [...document.querySelectorAll('.filter')]
+    let shouldHide = !('data-filter' in e.target.attributes)
+    if (shouldHide) {
+        filtersCls.forEach(filter => filter.style.display = 'none')
+    }
+})

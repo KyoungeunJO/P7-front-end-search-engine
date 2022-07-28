@@ -20,7 +20,7 @@
 }
 
 form {
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
 }
 
 #search-recipe {
@@ -30,6 +30,23 @@ form {
     border: 0 #E7E7E7;
 }
 
+.tag-container {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 1rem;
+}
+
+.tag {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    height: min-content;
+    background-color: #3282F7;
+    color: white;
+    border-radius: 10px;
+    padding: 0 10px;
+}
+
 .filter-container {
     display: flex;
     gap: 1rem;
@@ -37,23 +54,66 @@ form {
 }
 
 .filter {
-    width: min(33%,150px);
     color: white;
     padding: 1rem;
-    height: min-content;
-    max-height: 200px;
-    overflow: scroll;
+    position: absolute;
+    z-index: 100;
+    /* visibility: hidden; */
+    display: none;
 }
 
-.ingredients {
+.filter ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.5rem 1rem;
+}
+
+.filter ul li {
+    list-style-type: none;
+    display: block;
+    cursor: pointer;
+}
+
+.filter ul li:hover {
+    outline: 1px solid white;
+    border-radius: 3px;
+    outline-offset: .4rem;
+}
+
+.filter input, 
+.filter input::placeholder {
+    width: 100%;
+    color: white;
+    height: 2rem;
+    border: 0;
+    font-weight: 600;
+    opacity: .7;
+}
+
+.filter-summary {
+    color: white;
+    height: min-content;
+    padding: 0.5rem 1rem;
+    position: relative;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.ingredients,
+.ingredients input,
+.type-ingredients {
     background-color: #3282F7;   
 }
 
-.appareils {
+.appareils,
+.appareils input,
+.type-appliances {
     background-color: #68D9A4;
 }
 
-.ustensiles {
+.ustensiles,
+.ustensiles input,
+.type-ustensils {
     background-color: #ED6454;
 }
 
