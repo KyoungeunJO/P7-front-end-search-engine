@@ -68,13 +68,27 @@ function displayBtn(recipes) {
         let tag = Tag({text: tagValue, type: type})
         const tagSection = document.querySelector(".tag-container")
         tagSection.innerHTML += tag.render()
+        Array.from(tagSection.children).map(t => t.addEventListener('click', handleTagDelete))
         
         // Filter recipes
+        console.log(userResearch);
         userResearch[type].push(tagValue)
         updateFromSearch(userResearch)
     }) 
     )
 };
+
+function handleTagDelete(event) {
+    const tagNode = event.target.parentNode
+    // récupères le type du tag
+    const type = tagNode.getAttribute('data-type'); 
+    const value = event.target.previousElementSibling.innerText
+
+    userResearch[type] = userResearch[type].filter(word => word != value)
+    event.target.parentNode.remove()
+
+    updateFromSearch(userResearch)
+}
 
 
 // INIT
@@ -82,9 +96,9 @@ function displayBtn(recipes) {
 const { recipes } = await getRecipes();
 displayBtn(recipes);
 displayRecipes(recipes);
-handleMainSearch();
+initMainSearch();
 
-
+// object represents what the user is searching
 let userResearch = {
     keywords: [],
     ingredients: [],
@@ -93,16 +107,21 @@ let userResearch = {
 }
 
 
-function handleMainSearch() {
+function initMainSearch() {
     // Listen event from search bar
     const inputSearch = document.querySelector("#search-recipe")
     inputSearch.addEventListener("input", (event) => {
         // reset keywords
         userResearch.keywords = []
-        if(event.target.value.length >= 3) {
-            // add keywords in userResearch object
-            userResearch.keywords.push(event.target.value)
-        }
+
+        const words = event.target.value.split(' ')
+        words.forEach(word => {
+            if(word.length >= 3) {
+                userResearch.keywords.push(word)
+            }
+        })
+
+        // update even if value < 3 to handle deletion
         updateFromSearch(userResearch)
     })
 }
@@ -114,38 +133,56 @@ function updateFromSearch(userResearch) {
 }
 
 function filterRecipes(userResearch) {
-    let filteredRecipes = []
+    let filteredRecipes = [...recipes]
 
-    // return immediately if no keywords
-    if (userResearch.keywords.length == 0) {
-        filteredRecipes = [...recipes]
-    } else {
-        filteredRecipes = recipes.filter(recipe => {
+    if (userResearch.keywords.length > 0) {
+        filteredRecipes = filteredRecipes.filter(recipe => {
             // filter by keywords
-            const RecipeIngredients = recipe.ingredients.reduce((acc, val) =>  { 
+            const recipeIngredients = recipe.ingredients.reduce((acc, val) =>  { 
                 acc.push(val.ingredient)
                 return acc
             } , [])
 
             return (
-            recipe.name.includes(userResearch.keywords[0]) || 
-            RecipeIngredients.includes(userResearch.keywords[0]) || 
-            recipe.description.includes(userResearch.keywords[0])   
+            userResearch.keywords.every(word => recipe.name.includes(word)) ||
+            userResearch.keywords.every(word => recipeIngredients.includes(word)) ||
+            userResearch.keywords.every(word => recipe.description.includes(word))
             )
         })
     }
 
     // filter by tag ingredients
-    filteredRecipes = filteredRecipes.filter(recipe => {
-        const RecipeIngredients = recipe.ingredients.reduce((acc, val) =>  { 
-            acc.push(val.ingredient)
-            return acc
-        } , [])
+    if (userResearch.ingredients.length > 0) {
+        filteredRecipes = filteredRecipes.filter(recipe => {
+            const recipeIngredients = recipe.ingredients.reduce((acc, val) =>  { 
+                acc.push(val.ingredient)
+                return acc
+            } , [])
 
-        let shouldKeep = userResearch.ingredients.some(ingredient => RecipeIngredients.includes(ingredient))
-        return (shouldKeep)
-    })
+            let shouldKeep = userResearch.ingredients.every(ingredient => recipeIngredients.includes(ingredient))
+            return (shouldKeep)
+        })
+    }
 
+    //filter by tag appliances
+    if (userResearch.appliances.length > 0) {
+        filteredRecipes = filteredRecipes.filter(recipe => {
+            let shouldKeep = userResearch.appliances.every(appliance => {
+                return recipe.appliance.includes(appliance)
+            })
+            return shouldKeep
+        })
+    }
+
+    //filter by tag ustensils
+    if (userResearch.ustensils.length > 0) {
+        filteredRecipes = filteredRecipes.filter(recipe => {
+            let shouldKeep = userResearch.ustensils.every(ustensil => {
+                return recipe.ustensils.includes(ustensil)
+            })
+            return shouldKeep
+        })
+    }
 
     return filteredRecipes
 }

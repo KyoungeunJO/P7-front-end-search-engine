@@ -11,11 +11,10 @@ export default function Tag(data) {
 
     function render() {
         return `
-        <div class="tag type-${type}">
+        <div class="tag type-${type}" data-type="${type}">
             <p>${text}</p>
-            <i class="far fa-times-circle"></i>
+            <i class="far fa-times-circle" ></i>
         </div>
-        
         `
     }
 

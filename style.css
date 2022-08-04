@@ -1,3 +1,7 @@
+body {
+    padding: 0 10%;
+}
+
 .test {
     min-width: 200px;
     min-height: 100px;
@@ -24,10 +28,22 @@ form {
 }
 
 #search-recipe {
-    width: min(400px,100%);
+    width: 100%;
     background-color: #E7E7E7;
-    padding: 0.6rem;
+    padding: 1rem 0;
     border: 0 #E7E7E7;
+    position: relative;
+    border-radius: 5px;
+}
+
+#search-recipe::placeholder {
+    padding-left: 15px;
+}
+
+.fa-search {
+    position: absolute;
+    right: 50px;
+    top: 128px;
 }
 
 .tag-container {
@@ -91,6 +107,7 @@ form {
 }
 
 .filter-summary {
+    width: min(33%, 100px);
     color: white;
     height: min-content;
     padding: 0.5rem 1rem;
@@ -130,6 +147,7 @@ form {
 
 #recipe {
     display: grid;
+    max-width: 450px;
 }
 
 .recipe-img {
