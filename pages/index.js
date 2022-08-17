@@ -133,23 +133,41 @@ function updateFromSearch(userResearch) {
 }
 
 function filterRecipes(userResearch) {
+    const start = performance.now()
     let filteredRecipes = [...recipes]
     console.time("filter recipes")
 
     if (userResearch.keywords.length > 0) {
-        filteredRecipes = filteredRecipes.filter(recipe => {
-            // filter by keywords
+        let keepedRecipes = []
+        for (let i = 0; i < filteredRecipes.length; i++) {
+            const recipe = filteredRecipes[i]
             const recipeIngredients = recipe.ingredients.reduce((acc, val) =>  { 
                 acc.push(val.ingredient)
                 return acc
             } , [])
 
-            return (
-            userResearch.keywords.every(word => recipe.name.includes(word)) ||
-            userResearch.keywords.every(word => recipeIngredients.includes(word)) ||
-            userResearch.keywords.every(word => recipe.description.includes(word))
-            )
-        })
+            if(userResearch.keywords.every(word => recipe.name.includes(word)) ||
+                userResearch.keywords.every(word => recipeIngredients.includes(word)) ||
+                userResearch.keywords.every(word => recipe.description.includes(word))) {
+                
+                keepedRecipes.push(recipe)
+            }
+        }
+        filteredRecipes = keepedRecipes
+
+        // filteredRecipes = filteredRecipes.filter(recipe => {
+        //     // filter by keywords
+        //     const recipeIngredients = recipe.ingredients.reduce((acc, val) =>  { 
+        //         acc.push(val.ingredient)
+        //         return acc
+        //     } , [])
+
+        //     return (
+        //     userResearch.keywords.every(word => recipe.name.includes(word)) ||
+        //     userResearch.keywords.every(word => recipeIngredients.includes(word)) ||
+        //     userResearch.keywords.every(word => recipe.description.includes(word))
+        //     )
+        // })
     }
 
     // filter by tag ingredients
@@ -185,7 +203,10 @@ function filterRecipes(userResearch) {
         })
     }
 
-    console.timeEnd("filter recipes")
+    const end = performance.now()
+    const timeSpent = end - start
+    console.log(`Recipes filtered in ${timeSpent}ms \n
+    Recipes left: ${filteredRecipes.length}`);
     return filteredRecipes
 }
 
