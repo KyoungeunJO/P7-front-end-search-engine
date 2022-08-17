@@ -134,7 +134,7 @@ function updateFromSearch(userResearch) {
 
 function filterRecipes(userResearch) {
     let filteredRecipes = [...recipes]
-    console.time("filter recipes")
+    const start = performance.now()
 
     if (userResearch.keywords.length > 0) {
         filteredRecipes = filteredRecipes.filter(recipe => {
@@ -185,7 +185,10 @@ function filterRecipes(userResearch) {
         })
     }
 
-    console.timeEnd("filter recipes")
+    const end = performance.now()
+    const timeSpent = end - start
+    console.log(`Recipes filtered in ${timeSpent}ms \n
+    Recipes left: ${filteredRecipes.length}`);
     return filteredRecipes
 }
 
