@@ -154,20 +154,6 @@ function filterRecipes(userResearch) {
             }
         }
         filteredRecipes = keepedRecipes
-
-        // filteredRecipes = filteredRecipes.filter(recipe => {
-        //     // filter by keywords
-        //     const recipeIngredients = recipe.ingredients.reduce((acc, val) =>  { 
-        //         acc.push(val.ingredient)
-        //         return acc
-        //     } , [])
-
-        //     return (
-        //     userResearch.keywords.every(word => recipe.name.includes(word)) ||
-        //     userResearch.keywords.every(word => recipeIngredients.includes(word)) ||
-        //     userResearch.keywords.every(word => recipe.description.includes(word))
-        //     )
-        // })
     }
 
     // filter by tag ingredients
