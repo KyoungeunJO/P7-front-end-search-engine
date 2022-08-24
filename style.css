@@ -25,6 +25,7 @@ body {
 
 form {
     margin-bottom: 1rem;
+    position: relative;
 }
 
 #search-recipe {
@@ -32,7 +33,6 @@ form {
     background-color: #E7E7E7;
     padding: 1rem 0;
     border: 0 #E7E7E7;
-    position: relative;
     border-radius: 5px;
 }
 
@@ -42,8 +42,8 @@ form {
 
 .fa-search {
     position: absolute;
-    right: 50px;
-    top: 128px;
+    right: 15px;
+    top: 35%;
 }
 
 .tag-container {
