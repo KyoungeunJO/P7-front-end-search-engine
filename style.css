@@ -106,8 +106,11 @@ form {
     opacity: .7;
 }
 
-.filter-summary {
+.filter-btn-container {
     width: min(33%, 100px);
+}
+
+.filter-summary {
     color: white;
     height: min-content;
     padding: 0.5rem 1rem;

@@ -56,29 +56,30 @@ function displayBtn(recipes) {
 
     filters.forEach(filter => {
         const filterModel = Filter(filter);
-        const filterCardDOM = filterModel.render();
-        filterSection.innerHTML += filterCardDOM;
+        filterSection.appendChild(filterModel)
     })
 
     const filterElements = document.querySelectorAll('.element-list li');
-    filterElements.forEach(element => element.addEventListener('click', (e) => {
-        // Add tag on page
-        const type = element.getAttribute('data-type')
-        const tagValue = e.target.innerText
-        let tag = Tag({text: tagValue, type: type})
-        const tagSection = document.querySelector(".tag-container")
-        tagSection.innerHTML += tag.render()
-        Array.from(tagSection.children).map(t => t.addEventListener('click', handleTagDelete))
-        
-        // Filter recipes
-        console.log(userResearch);
-        userResearch[type].push(tagValue)
-        updateFromSearch(userResearch)
-    }) 
+    filterElements.forEach(element => element.addEventListener('click', handleFilterClick)
     )
 };
 
-function handleTagDelete(event) {
+export function handleFilterClick(e) {
+    // Add tag on page
+    const element = e.target
+    const type = element.getAttribute('data-type')
+    const tagValue = e.target.innerText
+    let tag = Tag({text: tagValue, type: type})
+    const tagSection = document.querySelector(".tag-container")
+    tagSection.innerHTML += tag.render()
+    Array.from(tagSection.children).map(t => t.addEventListener('click', handleTagDelete))
+    
+    // Filter recipes
+    userResearch[type].push(tagValue)
+    updateFromSearch(userResearch)
+}
+
+ function handleTagDelete(event) {
     const tagNode = event.target.parentNode
     // récupères le type du tag
     const type = tagNode.getAttribute('data-type'); 
