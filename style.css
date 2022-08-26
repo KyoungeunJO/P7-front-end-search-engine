@@ -1,6 +1,7 @@
 body {
-    padding: 0 10%;
-}
+    padding: 0 10px;
+  }
+  
 
 .test {
     min-width: 200px;
@@ -65,6 +66,7 @@ form {
 
 .filter-container {
     display: flex;
+    position: relative;
     gap: 1rem;
     margin-bottom: 2rem;
 }
@@ -105,6 +107,11 @@ form {
     font-weight: 600;
     opacity: .7;
 }
+
+#container-Ingredients, #container-Ustensiles, #container-Appareils {
+    top: 0;
+    left: 0;
+  }
 
 .filter-btn-container {
     width: min(33%, 100px);
@@ -201,4 +208,11 @@ article h2 {
     -webkit-line-clamp: 6;
     -webkit-box-orient: vertical;
     overflow: hidden;
+}
+
+@media screen and (min-width : 1024px) {
+    body {
+        padding: 0 10%;
+    }
+    
 }
